@@ -6,20 +6,19 @@ const formData = {
 const form = document.querySelector('.feedback-form');
 const localStorageKey = 'feedback-form-state';
 
+const data = loadFromLS(localStorageKey, {});
+
+formData.email = data.email || '';
+formData.message = data.message || '';
+
+form.elements.email.value = formData.email;
+form.elements.message.value = formData.message;
+
 form.addEventListener('input', event => {
   const { name, value } = event.target;
   formData[name] = value;
 
   saveToLS(localStorageKey, formData);
-});
-
-document.addEventListener('DOMContentLoaded', e => {
-  const data = loadFromLS(localStorageKey, {});
-
-  formData.email = data.email || '';
-  formData.message = data.message || '';
-  form.elements.email.value = formData.email;
-  form.elements.message.value = formData.message;
 });
 
 form.addEventListener('submit', evt => {
